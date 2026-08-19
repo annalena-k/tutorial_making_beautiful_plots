@@ -1,3 +1,6 @@
+# Plotting virtual environment — commit requirements_plotting.txt instead
+venv_plotting/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

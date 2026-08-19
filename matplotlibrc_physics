@@ -1,0 +1,69 @@
+# Matplotlib style for physics journals (Physical Review Letters, PRB, A&A, MNRAS).
+#
+# Usage at the top of every plotting notebook:
+#   import matplotlib
+#   matplotlib.rc_file("../../matplotlibrc_prl")
+#
+# Key choices:
+#   - text.usetex: True   →  uses your system's LaTeX installation to render all text.
+#                            Requires: (1) LaTeX installed (e.g. MacTeX / TeX Live),
+#                                      (2) CMU Serif font installed.
+#                            Install CMU Serif on macOS:  brew install --cask font-cm-unicode
+#                            After installing, refresh matplotlib's font cache:
+#                              import matplotlib.font_manager
+#                              matplotlib.font_manager._load_fontmanager(try_read_cache=False)
+#   - font.size: 9.0      →  matches PRL body text size (set to your journal's value)
+#   - savefig.bbox: tight →  can slightly shift positions; turn off for pixel-perfect sizing
+#
+# Note: Units in matplotlibrc are in pt, not px.
+
+text.usetex          : True
+mathtext.default     : regular
+
+font.family          : serif
+font.serif           : CMU Serif
+font.sans-serif      : DejaVu Sans
+font.cursive         : DejaVu Sans
+font.size            : 9.0
+figure.titlesize     : 9.0
+legend.fontsize      : 9.0
+axes.titlesize       : 9.0
+axes.labelsize       : 9.0
+xtick.labelsize      : 9.0
+ytick.labelsize      : 9.0
+
+image.interpolation   : nearest
+image.resample        : False
+image.composite_image : True
+
+axes.spines.left     : True
+axes.spines.bottom   : True
+axes.spines.top      : False
+axes.spines.right    : False
+axes.grid            : False
+
+axes.linewidth       : 0.8
+xtick.major.width    : 0.8
+xtick.minor.width    : 0.8
+ytick.major.width    : 0.8
+ytick.minor.width    : 0.8
+
+xtick.major.size    : 2.5
+xtick.minor.size    : 1.5
+ytick.major.size    : 2.5
+ytick.minor.size    : 1.5
+xtick.major.pad     : 2.5
+ytick.major.pad     : 2.5
+
+lines.linewidth      : 1.0
+lines.markersize     : 3
+
+savefig.dpi          : 500
+savefig.format       : pdf
+savefig.bbox         : tight
+savefig.pad_inches   : 0.1
+
+svg.image_inline     : True
+svg.fonttype         : none
+
+legend.frameon       : False

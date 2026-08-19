@@ -1,0 +1,16 @@
+{
+  "description": "Samples from two models for a 1D parameter estimate. Histogram computed from 500 samples each.",
+  "x_label": "Parameter value",
+  "y_label": "Density",
+  "ground_truth": 2.35,
+  "model_a": {
+    "label": "Model A",
+    "bin_edges": [-1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0],
+    "density":   [0.002, 0.010, 0.035, 0.085, 0.158, 0.215, 0.240, 0.175, 0.112, 0.060, 0.028, 0.009, 0.003, 0.001]
+  },
+  "model_b": {
+    "label": "Model B (proposed)",
+    "bin_edges": [-1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0],
+    "density":   [0.000, 0.002, 0.008, 0.030, 0.090, 0.185, 0.298, 0.260, 0.152, 0.065, 0.019, 0.004, 0.001, 0.000]
+  }
+}

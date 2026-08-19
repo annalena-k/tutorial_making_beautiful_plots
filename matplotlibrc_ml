@@ -1,0 +1,65 @@
+# Matplotlib style for ML conference papers (NeurIPS, ICML, ICLR style).
+#
+# Usage at the top of every plotting notebook:
+#   import matplotlib
+#   matplotlib.rc_file("../../matplotlibrc_neurips")
+#
+# Key choices:
+#   - text.usetex: False  →  uses matplotlib's built-in Computer Modern renderer,
+#                            no LaTeX installation required, very close to LaTeX output
+#   - font.size: 7.5      →  matches NeurIPS body text size (set to your journal's value)
+#   - top/right spines off, no grid  →  removes clutter
+#   - savefig.format: pdf  →  vector output for LaTeX inclusion
+#
+# Note: Units in matplotlibrc are in pt, not px.
+
+text.usetex          : False
+mathtext.default     : regular
+
+font.family          : serif
+font.serif           : Computer Modern, DejaVu Serif
+font.sans-serif      : DejaVu Sans
+font.cursive         : DejaVu Sans
+font.size            : 7.5
+figure.titlesize     : 7.5
+legend.fontsize      : 7.5
+axes.titlesize       : 7.5
+axes.labelsize       : 7.5
+xtick.labelsize      : 7.5
+ytick.labelsize      : 7.5
+
+image.interpolation   : nearest
+image.resample        : False
+image.composite_image : True
+
+axes.spines.left     : True
+axes.spines.bottom   : True
+axes.spines.top      : False
+axes.spines.right    : False
+axes.grid            : False
+
+axes.linewidth       : 1.0
+xtick.major.width    : 1.0
+xtick.minor.width    : 1.0
+ytick.major.width    : 1.0
+ytick.minor.width    : 1.0
+
+xtick.major.size    : 2.5
+xtick.minor.size    : 1.5
+ytick.major.size    : 2.5
+ytick.minor.size    : 1.5
+xtick.major.pad     : 2.5
+ytick.major.pad     : 2.5
+
+lines.linewidth      : 1.0
+lines.markersize     : 3
+
+savefig.dpi          : 500
+savefig.format       : pdf
+savefig.bbox         : tight
+savefig.pad_inches   : 0.1
+
+svg.image_inline     : True
+svg.fonttype         : none
+
+legend.frameon       : False

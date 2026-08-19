@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cb_colors"
+version = "0.1.0"
+description = "Colorblind-friendly color palettes for scientific plotting"
+authors = [{ name = "Annalena Kofler", email = "annalena.kofler1@gmail.com" }]
+requires-python = ">=3.9"
+dependencies = [
+    "matplotlib",
+    "numpy",
+    "jupyterlab",
+    "pyyaml",
+]
+
+[tool.setuptools]
+packages = ["cb_colors"]
