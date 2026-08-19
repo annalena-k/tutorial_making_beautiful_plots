@@ -13,9 +13,8 @@ def okabe_and_ito() -> dict:
     8 colors distinguishable under all common types of color vision deficiency
     (deuteranopia, protanopia, tritanopia) and in greyscale.
 
-    Key names follow the original iPlot nomenclature; canonical hex values are
-    from Wong (2011), Nature Methods 8:441.  doi:10.1038/nmeth.1618
-    Reference: https://jfly.uni-koeln.de/color/
+    Key names and hex values from the original CUD specification.
+    Reference: Okabe & Ito (2008). https://jfly.uni-koeln.de/color/ (orig. 2002)
     """
     return {
         "black":          _to_hex((0,   0,   0)),    # #000000
@@ -33,7 +32,7 @@ def accessible_colors() -> dict:
     """10-color accessible scheme from Chatterjee et al. (2021).
 
     A broader palette when more than 8 categories are needed.
-    Reference: https://doi.org/10.48550/arXiv.2107.02270
+    Reference: Petroff (2021). https://arxiv.org/abs/2107.02270
     """
     return {
         "blue":       _to_hex((63,  144, 218)),

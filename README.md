@@ -410,7 +410,7 @@ fig, ax = plt.subplots(figsize=(TEXTWIDTH / 2 - 0.05, (TEXTWIDTH / 2) * ASPECT))
 
 ### 3.4 Choosing colorblind-friendly colors
 
-**Why it matters:** Approximately 8% of men and 0.5% of women have some form of color vision deficiency ([Wong, 2011](https://doi.org/10.1038/nmeth.1618); [Simunovic, 2010](https://doi.org/10.1038/eye.2009.251)). The most common type (red-green, or deuteranopia) makes red and green appear nearly identical. If your plot distinguishes two lines with red vs. green (the most common color choice in scientific figures), a significant fraction of your readers cannot read it. This is not a minor accessibility concern: If ten people look at your paper, it is highly likely that at least one of them has a color deficiency!
+**Why it matters:** Approximately 8% of men and 0.5% of women have some form of color vision deficiency ([Okabe & Ito, 2008](https://jfly.uni-koeln.de/color/); [Simunovic, 2010](https://doi.org/10.1038/eye.2009.251)). The most common type (red-green, or deuteranopia) makes red and green appear nearly identical. If your plot distinguishes two lines with red vs. green (the most common color choice in scientific figures), a significant fraction of your readers cannot read it. This is not a minor accessibility concern: If ten people look at your paper, it is highly likely that at least one of them has a color deficiency!
 Something similar happens when someone prints your paper in black and white to save printer ink: The lines in the plot might not be distinguishable.
 
 Beyond accessibility, well-chosen colors look better to everyone. Carefully selected palettes have pleasing contrast, visual balance, and purpose. 
@@ -708,9 +708,9 @@ Depending on which palettes you use from `cb_colors`, cite the appropriate origi
 
 | Palette | Citation |
 |---|---|
-| `okabe_and_ito` | Wong, B. (2011). *Points of view: Color blindness.* Nature Methods, 8(6), 441. [doi:10.1038/nmeth.1618](https://doi.org/10.1038/nmeth.1618) |
+| `okabe_and_ito` | Okabe, M., & Ito, K. (2008). *Color universal design (CUD): How to make figures and presentations that are friendly to colorblind people.* [jfly.uni-koeln.de/color](https://jfly.uni-koeln.de/color/) (Original work published 2002) |
 | `paul_tol_bright`, `paul_tol_muted` | Tol, P. (2021). *Paul Tol's Notes: Introduction to Color Schemes.* [personal.sron.nl/~pault/](https://personal.sron.nl/~pault/) |
-| `accessible_colors` | Chatterjee, S. et al. (2021). *A hitchhiker's guide to choosing colors for scientific figures.* arXiv:2107.02270. [doi:10.48550/arXiv.2107.02270](https://doi.org/10.48550/arXiv.2107.02270) |
+| `accessible_colors` | Petroff, M. A. (2021). *A hitchhiker's guide to choosing colors for scientific figures.* [arXiv:2107.02270](https://arxiv.org/abs/2107.02270) |
 | `ibm_design_library` | IBM Design Language — Color. [ibm.com/design/language/color/](https://www.ibm.com/design/language/color/) |
 | `nceas_two_color_pairs`, `nceas_blue_to_red`, `nceas_purple_to_green` | Phillips, A. (2022). *Colorblind Safe Color Schemes.* NCEAS Science Communication Resource Corner. [nceas.ucsb.edu](https://www.nceas.ucsb.edu/sites/default/files/2022-06/Colorblind%20Safe%20Color%20Schemes.pdf) |
 

@@ -38,8 +38,85 @@ c = palettes.okabe_and_ito()
 #       "blue", "vermillion", "reddish_purple"
 ```
 
-If `cb_colors` is not available, use these hex values for Okabe & Ito:
-`#000000`, `#E69F00`, `#56B4E9`, `#009E73`, `#F0E442`, `#0072B2`, `#D55E00`, `#CC79A7`
+If `cb_colors` is not available, paste these dicts directly into your notebook:
+
+```python
+OKABE_AND_ITO = {
+    "black":          "#000000",
+    "orange":         "#E69F00",
+    "sky_blue":       "#56B4E9",
+    "bluish_green":   "#009E73",
+    "yellow":         "#F0E442",
+    "blue":           "#0072B2",
+    "vermillion":     "#D55E00",
+    "reddish_purple": "#CC79A7",
+}  # Okabe & Ito (2008) https://jfly.uni-koeln.de/color/
+
+PAUL_TOL_BRIGHT = {
+    "blue":   "#4477AA",
+    "cyan":   "#66CCEE",
+    "green":  "#228833",
+    "yellow": "#CCBB44",
+    "red":    "#EE6677",
+    "purple": "#AA3377",
+    "grey":   "#BBBBBB",
+}  # Tol (2021) https://personal.sron.nl/~pault/
+
+PAUL_TOL_MUTED = {
+    "indigo":    "#332288",
+    "cyan":      "#88CCEE",
+    "teal":      "#44AA99",
+    "green":     "#117733",
+    "olive":     "#999933",
+    "sand":      "#DDCC77",
+    "rose":      "#CC6677",
+    "wine":      "#882255",
+    "purple":    "#AA4499",
+    "pale_grey": "#DDDDDD",
+}  # Tol (2021) https://personal.sron.nl/~pault/
+
+IBM_DESIGN_LIBRARY = {
+    "blue":    "#648FFF",
+    "purple":  "#785EF0",
+    "magenta": "#DC267F",
+    "orange":  "#FE6100",
+    "gold":    "#FFB000",
+}  # IBM Design Language https://www.ibm.com/design/language/color/
+
+ACCESSIBLE_COLORS = {
+    "blue":        "#3F90DA",
+    "orange":      "#FFA90E",
+    "purple":      "#832DB6",
+    "red":         "#BD1F01",
+    "gray":        "#94A4A2",
+    "dark_orange": "#E76300",
+    "light_blue":  "#92DADD",
+    "dark_gray":   "#717581",
+    "tan":         "#B9AC70",
+    "brown":       "#A96B59",
+}  # Petroff (2021) https://arxiv.org/abs/2107.02270
+
+NCEAS_TWO_COLOR_PAIRS = {
+    "yellow_blue":   ["#FDB338", "#025196"],
+    "tan_turquoise": ["#E3BE6B", "#3DB1A6"],
+    "orange_purple": ["#EB6123", "#512888"],
+    "green_purple":  ["#295E11", "#58094F"],
+    "blue_red":      ["#2F67B1", "#BF2C23"],
+    "blue_pink":     ["#10559A", "#DB4C77"],
+    "yellow_pink":   ["#F4B301", "#DB1048"],
+    "brown_blue":    ["#6A4A3C", "#0F65A1"],
+}  # Phillips / NCEAS (2022), pixel-verified
+
+NCEAS_BLUE_TO_RED = [
+    "#1065AB", "#3A93C3", "#8EC4DE", "#D1E5F0", "#F9F0F9",
+    "#FEDBC7", "#F6A482", "#D75F4C", "#B31529",
+]  # Phillips / NCEAS (2022)
+
+NCEAS_PURPLE_TO_GREEN = [
+    "#742881", "#986EAC", "#C3A4CF", "#E5D4E8", "#F9F0F9",
+    "#D9F1D5", "#ADD4A0", "#5CAE63", "#1B7939",
+]  # Phillips / NCEAS (2022)
+```
 
 **Always use line style as a second visual channel** (solid, dashed, dotted) alongside color. This makes figures readable in greyscale and by colorblind readers.
 
@@ -75,12 +152,63 @@ matplotlib.rc_file("../../matplotlibrc_ml")   # adjust path as needed
 import matplotlib.pyplot as plt
 ```
 
-Key settings to always configure in the style file or via `rcParams.update`:
-- `axes.spines.top: False` and `axes.spines.right: False`
-- `axes.grid: False`
-- `legend.frameon: False`
-- `font.size` matching journal body text (7.5 pt for NeurIPS, 9 pt for PRL)
-- `savefig.format: pdf` and `savefig.bbox: tight`
+If no `matplotlibrc_ml` exists in the project, create one at the project root with exactly this content (tuned for ML conference papers; adjust `font.size` for other venues):
+
+```
+# matplotlibrc_ml — ML conference style (NeurIPS/ICML/ICLR)
+# font.size 7.5 matches NeurIPS body text; set to 9.0 for PRL/PRB
+
+text.usetex          : False
+mathtext.default     : regular
+
+font.family          : serif
+font.serif           : Computer Modern, DejaVu Serif
+font.sans-serif      : DejaVu Sans
+font.cursive         : DejaVu Sans
+font.size            : 7.5
+figure.titlesize     : 7.5
+legend.fontsize      : 7.5
+axes.titlesize       : 7.5
+axes.labelsize       : 7.5
+xtick.labelsize      : 7.5
+ytick.labelsize      : 7.5
+
+image.interpolation   : nearest
+image.resample        : False
+image.composite_image : True
+
+axes.spines.left     : True
+axes.spines.bottom   : True
+axes.spines.top      : False
+axes.spines.right    : False
+axes.grid            : False
+
+axes.linewidth       : 1.0
+xtick.major.width    : 1.0
+xtick.minor.width    : 1.0
+ytick.major.width    : 1.0
+ytick.minor.width    : 1.0
+
+xtick.major.size     : 2.5
+xtick.minor.size     : 1.5
+ytick.major.size     : 2.5
+ytick.minor.size     : 1.5
+xtick.major.pad      : 2.5
+ytick.major.pad      : 2.5
+
+lines.linewidth      : 1.0
+lines.markersize     : 3
+
+savefig.dpi          : 500
+savefig.format       : pdf
+savefig.bbox         : tight
+savefig.pad_inches   : 0.1
+
+svg.image_inline     : True
+svg.fonttype         : none
+
+legend.frameon       : False
+```
 
 ---
 
