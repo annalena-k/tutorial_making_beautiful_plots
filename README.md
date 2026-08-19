@@ -87,7 +87,6 @@ pip install -r requirements_pinned.txt
   - [Contents of this repository](#contents-of-this-repository)
   - [Quick start](#quick-start)
   - [Table of Contents](#table-of-contents)
-  - [The Example Plots](#the-example-plots)
   - [1. The Philosophy of Plotting](#1-the-philosophy-of-plotting)
     - [What to ask yourself before plotting](#what-to-ask-yourself-before-plotting)
     - [Clutter is the enemy](#clutter-is-the-enemy)
@@ -115,28 +114,10 @@ pip install -r requirements_pinned.txt
     - [Some plots never make the final paper](#some-plots-never-make-the-final-paper)
     - [Figures in slides](#figures-in-slides)
     - [Referee revisions](#referee-revisions)
+  - [The Example Plots](#the-example-plots)
   - [6. Citing papers and colormaps](#6-citing-papers-and-colormaps)
   - [7. Further Reading](#7-further-reading)
   - [8. LLM usage disclaimer](#8-llm-usage-disclaimer)
-
----
-
-## The Example Plots
-
-The three examples in `example_plots/` are not just toy demos — each was chosen to represent a distinct plot type that comes up in almost every ML or physics paper, and each illustrates a specific set of design challenges.
-
-**01 — Line plot: method comparison over training**  
-`01_line_plot/` shows multiple methods plotted against a shared x-axis (e.g. training epochs or time). This is arguably the most common figure type in machine learning papers. The design challenges here are: choosing colors that remain distinguishable at small print sizes, placing the legend without it overlapping the curves, and picking axis ranges that focus attention on the relevant regime rather than on uninformative tails.
-
-**02 — Histogram: distribution comparison**  
-`02_histogram/` compares two overlapping distributions. Histograms are deceptively tricky: the bin width dramatically changes what the reader sees, alpha blending must be chosen carefully for overlapping fills, and the legend placement becomes important when both distributions occupy the same region. This example also illustrates how to summarize raw samples into a small JSON file (bin edges + density values) so that re-plotting is instant.
-
-**03 — Scatter plot with error bars: predictions vs. ground truth**  
-`03_scatter_with_errorbars/` shows model predictions against ground truth with uncertainty estimates, a reference diagonal, and a separate residual panel below. This represents the "result summary" figure that often carries the main claim of the paper. The key design choices here are: using a reference line that communicates the ideal outcome without dominating the figure, error bars that are visible but not distracting, and matching axis ranges across the two panels.
-
-![Example scatter plot with error bars](example_plots/03_scatter_with_errorbars/png/fig_03_preview.png)
-
-Each notebook contains a `VERSION` switch at the top (`"paper"` / `"slides"` / `"dark"`) so you can regenerate the same figure in different formats with a single variable change. See [section 4](#4-why-you-should-make-multiple-versions-of-a-figure) for the rationale.
 
 ---
 
@@ -695,6 +676,25 @@ These presentation-specific figures either live alongside the paper figures (wit
 ### Referee revisions
 
 Referees will ask for additional analyses, replotted comparisons with new baselines, or modified visualizations. Having the data and code organized in a clean folder structure means these revisions are fast: find the folder, update the data file or adjust the notebook, regenerate. If the figures are in git, you can also compare the before-and-after trivially.
+
+---
+
+## The Example Plots
+
+The three examples in `example_plots/` are not just toy demos — each was chosen to represent a distinct plot type that comes up in almost every ML or physics paper, and each illustrates a specific set of design challenges.
+
+**01 — Line plot: method comparison over training**  
+`01_line_plot/` shows multiple methods plotted against a shared x-axis (e.g. training epochs or time). This is arguably the most common figure type in machine learning papers. The design challenges here are: choosing colors that remain distinguishable at small print sizes, placing the legend without it overlapping the curves, and picking axis ranges that focus attention on the relevant regime rather than on uninformative tails.
+
+**02 — Histogram: distribution comparison**  
+`02_histogram/` compares two overlapping distributions. Histograms are deceptively tricky: the bin width dramatically changes what the reader sees, alpha blending must be chosen carefully for overlapping fills, and the legend placement becomes important when both distributions occupy the same region. This example also illustrates how to summarize raw samples into a small JSON file (bin edges + density values) so that re-plotting is instant.
+
+**03 — Scatter plot with error bars: predictions vs. ground truth**  
+`03_scatter_with_errorbars/` shows model predictions against ground truth with uncertainty estimates, a reference diagonal, and a separate residual panel below. This represents the "result summary" figure that often carries the main claim of the paper. The key design choices here are: using a reference line that communicates the ideal outcome without dominating the figure, error bars that are visible but not distracting, and matching axis ranges across the two panels.
+
+![Example scatter plot with error bars](example_plots/03_scatter_with_errorbars/png/fig_03_preview.png)
+
+Each notebook contains a `VERSION` switch at the top (`"paper"` / `"slides"` / `"dark"`) so you can regenerate the same figure in different formats with a single variable change. See [section 4](#4-why-you-should-make-multiple-versions-of-a-figure) for the rationale.
 
 ---
 
