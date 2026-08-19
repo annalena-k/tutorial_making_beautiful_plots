@@ -8,7 +8,7 @@ TL;DR: Your plots make or break your paper.
 I hope this tutorial contains a few interesting details for everyone to improve their plotting game!
 Let me know if you have things to add or if you do things differently.
 
-*This tutorial is inspired by @michaeldeistler's figure tutorial [mackelab/figure_tutorial](https://github.com/mackelab/figure_tutorial). I highly recommend checking it out in addition to this one. I wanted to prepare an extended version that covers the full workflow from data preparation to LaTeX integration, explains the reasoning behind each plotting choice more deeply, covers how plots evolve throughout a project, and includes a ready-to-use colorblind-friendly color palette package. The mackelab tutorial additionally explains how to sync your figures via git and how to compose multi-panel figures programmatically (using svgutils); I explain why I decided to do the latter in LaTeX instead.*
+> This tutorial is inspired by @michaeldeistler's figure tutorial [mackelab/figure_tutorial](https://github.com/mackelab/figure_tutorial). I highly recommend checking it out in addition to this one. I wanted to prepare an extended version that covers the full workflow from data preparation to LaTeX integration, explains the reasoning behind each plotting choice more deeply, covers how plots evolve throughout a project, and includes a ready-to-use colorblind-friendly color palette package. The mackelab tutorial additionally explains how to sync your figures via git and how to compose multi-panel figures programmatically (using svgutils); I explain why I decided to do the latter in LaTeX instead.
 
 ---
 
@@ -18,24 +18,30 @@ Let me know if you have things to add or if you do things differently.
 tutorial_making_beautiful_plots/
 ├── README.md                          ← this tutorial
 ├── pyproject.toml                     ← pip install -e .
+├── requirements.txt                   ← minimal dependencies (no pinned versions)
+├── requirements_pinned.txt            ← exact pinned versions for reproducibility
 ├── cb_colors/                         ← colorblind-friendly color palettes
 │   ├── __init__.py
 │   └── palettes.py
-├── matplotlibrc_ml                        ← style file for ML conferences (NeurIPS/ICML/ICLR)
-├── matplotlibrc_physics                   ← style file for physics journals (PRL, PRB, A&A)
+├── cb_colors_overview/                ← all palettes visualized in one figure
+│   ├── notebooks/plot_color_overview.ipynb
+│   └── png/color_overview.png
+├── matplotlibrc_ml                    ← style file for ML conferences (NeurIPS/ICML/ICLR)
+├── matplotlibrc_physics               ← style file for physics journals (PRL, PRB, A&A)
 └── example_plots/
-    ├── 01_line_plot/                  ← Fig. 1: method comparison over training
+    ├── 01_line_plot/                  ← method comparison over training
     │   ├── data/example_data.json
     │   ├── notebooks/plot_line_comparison.ipynb
     │   └── pdf/
-    ├── 02_histogram/                  ← Fig. 2: distribution comparison
+    ├── 02_histogram/                  ← distribution comparison
     │   ├── data/example_data.json
     │   ├── notebooks/plot_histogram.ipynb
     │   └── pdf/
-    ├── 03_scatter_with_errorbars/     ← Fig. 3: predictions vs. ground truth
+    ├── 03_scatter_with_errorbars/     ← predictions vs. ground truth
     │   ├── data/example_data.yaml
     │   ├── notebooks/plot_scatter.ipynb
-    │   └── pdf/
+    │   ├── pdf/
+    │   └── png/
     └── z_backlog_plots/               ← plots that didn't make it into the paper
         └── exploratory_violin/
             ├── data/
@@ -46,7 +52,7 @@ tutorial_making_beautiful_plots/
 ## Quick start
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/annalena-k/tutorial_making_beautiful_plots.git
 cd tutorial_making_beautiful_plots
 
 # Create and activate the dedicated plotting environment (see section 2.6 for why)
@@ -67,7 +73,7 @@ To recreate the exact same environment from the pinned lockfile:
 ```bash
 python3 -m venv venv_plotting
 source venv_plotting/bin/activate
-pip install -r requirements_plotting.txt
+pip install -r requirements_pinned.txt
 ```
 
 ---
@@ -78,26 +84,27 @@ pip install -r requirements_plotting.txt
   - [Contents of this repository](#contents-of-this-repository)
   - [Quick start](#quick-start)
   - [Table of Contents](#table-of-contents)
+  - [The Example Plots](#the-example-plots)
   - [1. The Philosophy of Plotting](#1-the-philosophy-of-plotting)
-    - [Ask yourself before plotting](#ask-yourself-before-plotting)
+    - [What to ask yourself before plotting](#what-to-ask-yourself-before-plotting)
     - [Clutter is the enemy](#clutter-is-the-enemy)
     - [Every choice matters](#every-choice-matters)
     - [Iterate with collaborators](#iterate-with-collaborators)
-  - [2. Before You Plot: The Workflow](#2-before-you-plot-the-workflow)
+  - [2. Plan how you plot: The Workflow](#2-plan-how-you-plot-the-workflow)
     - [2.1 Summarize your data into small files](#21-summarize-your-data-into-small-files)
     - [2.2 Don't plot on the cluster](#22-dont-plot-on-the-cluster)
     - [2.3 Version control data, code, and figures](#23-version-control-data-code-and-figures)
     - [2.4 Folder structure](#24-folder-structure)
     - [2.5 Why I plot in notebooks](#25-why-i-plot-in-notebooks)
     - [2.6 Use a dedicated virtual environment](#26-use-a-dedicated-virtual-environment)
-  - [3. The Plotting Process](#3-the-plotting-process)
+  - [3. The Plotting Process and Its Details](#3-the-plotting-process-and-its-details)
     - [3.1 The matplotlibrc file](#31-the-matplotlibrc-file)
     - [3.2 Installing the right fonts](#32-installing-the-right-fonts)
     - [3.3 Getting the right figure size](#33-getting-the-right-figure-size)
     - [3.4 Choosing colorblind-friendly colors](#34-choosing-colorblind-friendly-colors)
     - [3.5 Saving the figure](#35-saving-the-figure)
     - [3.6 Integrating figures into LaTeX](#36-integrating-figures-into-latex)
-  - [4. Making Multiple Versions of a Figure](#4-making-multiple-versions-of-a-figure)
+  - [4. Why you should make multiple versions of a figure](#4-why-you-should-make-multiple-versions-of-a-figure)
   - [5. How Plots Evolve During Paper Writing](#5-how-plots-evolve-during-paper-writing)
     - [Early exploration: many plots, most discarded](#early-exploration-many-plots-most-discarded)
     - [Many versions of the same plot: iteration is the process](#many-versions-of-the-same-plot-iteration-is-the-process)
@@ -107,14 +114,34 @@ pip install -r requirements_plotting.txt
     - [Referee revisions](#referee-revisions)
   - [6. Citing papers and colormaps](#6-citing-papers-and-colormaps)
   - [7. Further Reading](#7-further-reading)
+  - [8. LLM usage disclaimer](#8-llm-usage-disclaimer)
+
+---
+
+## The Example Plots
+
+The three examples in `example_plots/` are not just toy demos — each was chosen to represent a distinct plot type that comes up in almost every ML or physics paper, and each illustrates a specific set of design challenges.
+
+**01 — Line plot: method comparison over training**  
+`01_line_plot/` shows multiple methods plotted against a shared x-axis (e.g. training epochs or time). This is arguably the most common figure type in machine learning papers. The design challenges here are: choosing colors that remain distinguishable at small print sizes, placing the legend without it overlapping the curves, and picking axis ranges that focus attention on the relevant regime rather than on uninformative tails.
+
+**02 — Histogram: distribution comparison**  
+`02_histogram/` compares two overlapping distributions. Histograms are deceptively tricky: the bin width dramatically changes what the reader sees, alpha blending must be chosen carefully for overlapping fills, and the legend placement becomes important when both distributions occupy the same region. This example also illustrates how to summarize raw samples into a small JSON file (bin edges + density values) so that re-plotting is instant.
+
+**03 — Scatter plot with error bars: predictions vs. ground truth**  
+`03_scatter_with_errorbars/` shows model predictions against ground truth with uncertainty estimates, a reference diagonal, and a separate residual panel below. This represents the "result summary" figure that often carries the main claim of the paper. The key design choices here are: using a reference line that communicates the ideal outcome without dominating the figure, error bars that are visible but not distracting, and matching axis ranges across the two panels.
+
+![Example scatter plot with error bars](example_plots/03_scatter_with_errorbars/png/fig_03_preview.png)
+
+Each notebook contains a `VERSION` switch at the top (`"paper"` / `"slides"` / `"dark"`) so you can regenerate the same figure in different formats with a single variable change. See [section 4](#4-why-you-should-make-multiple-versions-of-a-figure) for the rationale.
 
 ---
 
 ## 1. The Philosophy of Plotting
 
-Before touching any code, it's worth thinking hard about *why* and *what* you're plotting. A figure in a scientific paper is not just data, it is an argument designed to convince the reader of your story. The most technically correct plot can fail completely as a figure if it doesn't communicate effectively what you want to say.
+Before touching any code, it's worth thinking hard about why and what you're plotting. A figure in a scientific paper is not just data, it is an argument designed to convince the reader of your story. The most technically correct plot can fail completely as a figure if it doesn't communicate effectively what you want to say.
 
-### Ask yourself before plotting
+### What to ask yourself before plotting
 
 **What is the one message I want this plot to convey?**
 Every good figure makes exactly one point which should be obvious to the reader just from looking at your plot. Choosing (a) the message you want to get across, and (b) the plot design that supports your claim are incredibly important, but oftentimes people "just start plotting".  
@@ -130,11 +157,11 @@ If yes, that's a sign the plot is too complex, the visual encoding is unclear, o
 If you find yourself with a plot that needs half a paragraph of caption before the reader can understand it, the plot isn't working. The best figures communicate their main message within seconds and also don't contain too much information. If you have multiple messages, consider whether they belong in separate panels, separate figures, or whether these messages are important at all for your storyline.
 
 **Does careful presentation make the reader trust my results more?**
-Yes. Sloppy plots (misaligned axes, clashing colors, unreadable font sizes, too many elements crammed in) make readers skeptical, even if the underlying science is correct. Beautiful, carefully made figures signal that the work behind them was equally careful. If you say *"Why should I spend time making the figure beautiful, as long as it conveys the result, that's fine."*, I can assure you that people enjoy looking at your figure more and for longer if it is pleasing to the eye. For example, I never use the standard matplotlib colors. Everyone knows them, sees them every day, and is simply bored by them. Intentionally choosing colors (which can be a time-consuming process) has always been worth it and I have received compliments for such choices. Making your figure beautiful also tells the reviewer: *"This is not a preliminary result, but something ready for publication. I have so much faith into this result that I invested a significant amount of time into presenting it nicely. This is why you also should take it seriously and eventually trust the result."*
+Yes. Sloppy plots (misaligned axes, clashing colors, unreadable font sizes, too many elements crammed in) make readers skeptical, even if the underlying science is correct. Beautiful, carefully made figures signal that the work behind them was equally careful. If you say "Why should I spend time making the figure beautiful, as long as it conveys the result, that's fine.", I can assure you that people enjoy looking at your figure more and for longer if it is pleasing to the eye. For example, I never use the standard matplotlib colors. Everyone knows them, sees them every day, and is simply bored by them. Intentionally choosing colors (which can be a time-consuming process) has always been worth it and I have received compliments for such choices. Making your figure beautiful also tells the reviewer: "This is not a preliminary result, but something ready for publication. I have so much faith into this result that I invested a significant amount of time into presenting it nicely. This is why you also should take it seriously and eventually trust the result."
 Presentation is not superficial: it directly affects how your results are received.
 
 ### Clutter is the enemy
-A common issue I have with peliminary (LLM made plots) is that they contain each and every pieace of information, resulting in a lot of unnecessary clutter.
+A common issue I have with peliminary (often LLM made) plots is that they contain each and every pieace of information, resulting in a lot of unnecessary clutter.
 I believe that every element on a plot must earn its place. You can ask yourself: "What can I remove without losing information?" and remove it. This will make your plot cleaner, less confusing, and sharpen the message you want to convey.
 
 Examples: 
@@ -168,7 +195,7 @@ You'll often find that colleagues immediately notice things you've stopped seein
 
 ---
 
-## 2. Before You Plot: The Workflow
+## 2. Plan how you plot: The Workflow
 
 ### 2.1 Summarize your data into small files
 
@@ -196,7 +223,7 @@ HPC clusters are optimized for computation, not visualization. Plotting there is
 - You cannot iterate quickly, which means you settle for "fine" rather than improving the plot until it is "great."
 - If the cluster is shut down for maintenance or some files cannot be accessed because a node got fried (This happened to me when I was writing a paper!), you cannot redo the plot because you can't access the data. This can be devastating if you have a submission deadline coming up.
 
-From my experience of previous projects, results are updated very rarely while plots are updated often until all people on the paper are happy with them. I would estimate that in one of my projects, I updated the underlying data for one plot maybe four times, but iterated the plot at least 50 times. It is definitely worth it making these 100 iterations as quick and easy as possible.
+From my experience of previous projects, results are updated very rarely while plots are updated often until all people on the paper are happy with them. I would estimate that in one of my projects, I updated the underlying data for one plot maybe four times, but iterated the plot at least 100 times. It is definitely worth it making these 100 iterations as quick and easy as possible.
 
 Therefore, I can recommend doing all heavy computation on the cluster, extracting summary files, copying them to your local machine (or a shared folder), and doing all plotting there. A fast feedback loop where you see results immediately when you change something, is what makes iterative refinement of figures fun.
 
@@ -215,9 +242,9 @@ Your plotting repository should be a git repository containing:
 - Collaborators can see the current state of all figures without running any code.
 - When a referee asks "What was Figure 3 in the original submission?", you can answer immediately.
 
-If your project has many or large binary files, you might not be properly constructing your summary files and it could be helpful to go back to section [section 2.1](#21-summarize-your-data-into-small-files). If you really need these large files, consider git LFS. For typical PDF figures, regular git is fine.
+If your project has many or large binary files, you might not be properly constructing your summary files and it could be helpful to go back to [section 2.1](#21-summarize-your-data-into-small-files). If you really need these large files, consider git LFS. For typical PDF figures, regular git is fine.
 
-**Important:** The plotting data (summary files), plotting code (notebooks), and figures (PDFs) should all be committed together. If you change the notebook and regenerate a figure, commit the new PDF at the same time. This keeps the repository consistent.
+**Tipp:** The plotting data (summary files), plotting code (notebooks), and figures (PDFs) should all be committed together. If you change the notebook and regenerate a figure, commit the new PDF at the same time. This keeps the repository consistent.
 
 ### 2.4 Folder structure
 
@@ -245,7 +272,7 @@ Jupyter notebooks are excellent for iterative figure making:
 I recommend only using one notebook per figure (or per closely related group of figures) because this keeps everything clear and simple. You only load the essential data files and make the one essential plot.
 At the beginning, I thought that this is would generate a lot of notebooks with little content, but I was surprised how long the notebooks got over time (different versions of the same plot, cross-checks, small tweaks, ...). The notebook lives in `notebooks/` inside the figure folder and saves its output to `pdf/`.
 
-*Note on AI tools: Coding assistants like Claude are changing how quickly one can iterate on figures since you can describe what you want, get working code immediately, and refine from there. In the future, this might shift the workflow toward plain Python scripts over notebooks. For now, the interactive notebook workflow remains excellent for the exploratory, visual work of making figures which allows manual editing when needed.*
+> **Note on LLM tools:** Coding assistants like Claude are changing how quickly one can iterate on figures since you can describe what you want, get working code immediately, and refine from there. In the future, this might shift the workflow toward plain Python scripts over notebooks. For now, the interactive notebook workflow remains excellent for the exploratory, visual work of making figures which allows manual editing when needed.
 
 ### 2.6 Use a dedicated virtual environment
 
@@ -261,18 +288,18 @@ This sounds like extra overhead, and early in a project it feels that way. But i
 python3 -m venv venv_plotting
 source venv_plotting/bin/activate
 pip install -e .                          # installs dependencies from pyproject.toml
-pip freeze > requirements_plotting.txt    # pin all exact versions
+pip freeze > requirements_pinned.txt      # pin all exact versions
 ```
 
-Commit `requirements_plotting.txt` to git. Do *not* commit `venv_plotting/` itself (it's in `.gitignore`). Anyone who clones the repo and wants to reproduce exactly what you saw can run:
+Commit `requirements_pinned.txt` to git. Do **not** commit `venv_plotting/` itself (it's in `.gitignore`). Anyone who clones the repo and wants to reproduce exactly what you saw can run:
 
 ```bash
 python3 -m venv venv_plotting
 source venv_plotting/bin/activate
-pip install -r requirements_plotting.txt
+pip install -r requirements_pinned.txt
 ```
 
-**When to update:** When you want a new package version, update explicitly, re-test your figures, and commit the new `requirements_plotting.txt`. That way the update is a deliberate, documented change and not a silent drift.
+**When to update:** When you want a new package version, update explicitly, re-test your figures, and commit the new `requirements_pinned.txt`. That way the update is a deliberate, documented change and not a silent drift.
 
 **In JupyterLab:** Select the venv as the kernel by name (`venv_plotting`). If it doesn't appear, you can register it via:
 ```bash
@@ -283,7 +310,7 @@ python -m ipykernel install --user --name venv_plotting --display-name "venv_plo
 
 ---
 
-## 3. The Plotting Process
+## 3. The Plotting Process and Its Details
 
 ### 3.1 The matplotlibrc file
 
@@ -399,10 +426,12 @@ fig, ax = plt.subplots(figsize=(TEXTWIDTH / 2 - 0.05, (TEXTWIDTH / 2) * ASPECT))
 
 ### 3.4 Choosing colorblind-friendly colors
 
-**Why it matters:** Approximately 8% of men and 0.5% of women have some form of color vision deficiency. The most common type (red-green, or deuteranopia) makes red and green appear nearly identical. If your plot distinguishes two lines with red vs. green (the most common color choice in scientific figures), a significant fraction of your readers cannot read it. This is not a minor accessibility concern: If ten people look at your paper, it is highly likely that at least one of them has a color deficiency!
+**Why it matters:** Approximately 8% of men and 0.5% of women have some form of color vision deficiency ([Wong, 2011](https://doi.org/10.1038/nmeth.1618); [Simunovic, 2010](https://doi.org/10.1038/eye.2009.251)). The most common type (red-green, or deuteranopia) makes red and green appear nearly identical. If your plot distinguishes two lines with red vs. green (the most common color choice in scientific figures), a significant fraction of your readers cannot read it. This is not a minor accessibility concern: If ten people look at your paper, it is highly likely that at least one of them has a color deficiency!
 Something similar happens when someone prints your paper in black and white to save printer ink: The lines in the plot might not be distinguishable.
 
-Beyond accessibility, well-chosen colors look better to everyone. Carefully selected palettes have pleasing contrast, visual balance, and purpose.
+Beyond accessibility, well-chosen colors look better to everyone. Carefully selected palettes have pleasing contrast, visual balance, and purpose. 
+
+**How to choose colors:** Ideally, your color choices are consistent across (sub)plots. For example, if you compare three versions of approaches/methods/models, each one should have a distinct color that you stick with for the whole paper. Of course, this requires careful selection: Ideally, you know all plots that you want to include in the paper. Then you sit down, collect all color combinations you need, and try to find suitable colors for each plot such that everything makes sense together. This process might take quite some time and effort
 
 **What to avoid:** The default matplotlib color cycle is not designed with color blindness in mind. The `jet` colormap is a notorious example of a colormap that should essentially never be used (poor perceptual uniformity, terrible for color-blind readers). Red vs. green is the most common mistake in scientific plots.
 
@@ -413,31 +442,47 @@ from cb_colors import palettes
 
 # Most widely recommended — 8 colors, tested under all common deficiency types
 c = palettes.okabe_and_ito()
-# Keys: "black", "green", "blue", "lightblue", "yellow", "lightorange", "orange", "lightpink"
+# Keys: "black", "orange", "sky_blue", "bluish_green", "yellow",
+#        "blue", "vermillion", "reddish_purple"
 
 # Good for multiple categories, clean and vibrant
 c = palettes.paul_tol_bright()
+# Keys: "blue", "cyan", "green", "yellow", "red", "purple", "grey"
 
 # Softer tones, good for filled areas and overlapping distributions
 c = palettes.paul_tol_muted()
+# Keys: "indigo", "cyan", "teal", "green", "olive", "sand",
+#        "rose", "wine", "purple", "pale_grey"
 
 # 10-color accessible scheme for when 8 colors aren't enough
 c = palettes.accessible_colors()
+
+# 8 two-color pairs for paired comparisons (Alexandra Phillips / NCEAS, 2022)
+pairs = palettes.nceas_two_color_pairs()
+color_a, color_b = pairs["blue_red"]
+
+# Divergent colormaps (9 stops, blue→white→red or purple→white→green)
+btr = palettes.nceas_blue_to_red()    # list of 9 hex strings
+ptg = palettes.nceas_purple_to_green()
 ```
 
-All palettes return dictionaries mapping descriptive names to hex strings:
+All discrete palettes return dicts mapping descriptive names to hex strings:
 ```python
 c = palettes.okabe_and_ito()
-print(c["blue"])   # → "#0072B2"
+print(c["blue"])   # → "#0072b2"
 ```
 
 **Usage example:**
 ```python
 c = palettes.okabe_and_ito()
 
-ax.plot(x, y_a, color=c["blue"],   label="Method A")
-ax.plot(x, y_b, color=c["orange"], label="Method B")
+ax.plot(x, y_a, color=c["sky_blue"],   label="Method A")
+ax.plot(x, y_b, color=c["vermillion"], label="Method B")
 ```
+
+**Color palette overview** — all palettes included in `cb_colors`:
+
+![Color palette overview](cb_colors_overview/png/color_overview.png)
 
 **Don't rely on color alone.** Also vary the line style (solid, dashed, dotted) or marker type. This makes the figure readable when printed in grayscale (still common in physics journals) and adds a second visual channel to distinguish groups. See the `02_histogram` and `03_scatter_with_errorbars` notebooks for examples.
 
@@ -548,7 +593,7 @@ Each `\stackinset` wraps the previous one. The innermost (deepest nesting) is al
 
 ---
 
-## 4. Making Multiple Versions of a Figure
+## 4. Why you should make multiple versions of a figure
 
 A single figure typically needs to exist in several versions:
 - **Paper version**: exact journal column width, small font, PDF
@@ -656,6 +701,20 @@ Since it is a lot of work to design colorblind friendly color schemes and write 
 This is the only way we can show appreciation for such important work.
 Additionally, a citation might inspire your readers to adopt the same color schemes!
 
+Depending on which palettes you use from `cb_colors`, cite the appropriate original source:
+
+| Palette | Citation |
+|---|---|
+| `okabe_and_ito` | Wong, B. (2011). *Points of view: Color blindness.* Nature Methods, 8(6), 441. [doi:10.1038/nmeth.1618](https://doi.org/10.1038/nmeth.1618) |
+| `paul_tol_bright`, `paul_tol_muted` | Tol, P. (2021). *Paul Tol's Notes: Introduction to Color Schemes.* [personal.sron.nl/~pault/](https://personal.sron.nl/~pault/) |
+| `accessible_colors` | Chatterjee, S. et al. (2021). *A hitchhiker's guide to choosing colors for scientific figures.* arXiv:2107.02270. [doi:10.48550/arXiv.2107.02270](https://doi.org/10.48550/arXiv.2107.02270) |
+| `ibm_design_library` | IBM Design Language — Color. [ibm.com/design/language/color/](https://www.ibm.com/design/language/color/) |
+| `nceas_two_color_pairs`, `nceas_blue_to_red`, `nceas_purple_to_green` | Phillips, A. (2022). *Colorblind Safe Color Schemes.* NCEAS Science Communication Resource Corner. [nceas.ucsb.edu](https://www.nceas.ucsb.edu/sites/default/files/2022-06/Colorblind%20Safe%20Color%20Schemes.pdf) |
+
+If you use `matplotlib`, you should also cite:
+
+> Hunter, J. D. (2007). *Matplotlib: A 2D graphics environment.* Computing in Science & Engineering, 9(3), 90–95. [doi:10.1109/MCSE.2007.55](https://doi.org/10.1109/MCSE.2007.55)
+
 ---
 
 ## 7. Further Reading
@@ -667,3 +726,14 @@ Additionally, a citation might inspire your readers to adopt the same color sche
 - [**Coblis: color blindness simulator**](https://www.color-blindness.com/coblis-color-blindness-simulator/) — paste your figure to see how it looks under different types of color vision deficiency
 - [**matplotlib rcParams reference**](https://matplotlib.org/stable/tutorials/introductory/customizing.html) — full documentation for every setting in a matplotlibrc file
 - **Tufte, E.R., *The Visual Display of Quantitative Information*** — the classic reference on data visualization design; chapter 4 ("Data-Ink and Graphical Redesign") is especially relevant to the "clutter is the enemy" principle above
+
+---
+
+## 8. LLM usage disclaimer
+
+Claude code was used to iterate the structure of this tutorial, prepare the general examples (including the data), and improve some of the code that I use for plotting my own paper figures.
+I gathered the points discussed in the tutorial myself, wrote an initial, incomplete draft, and instructed Claude to clean my writing, shorten it, and add small technical details that I wasn't aware of.
+Claude Code was also used to implement the `cb_colors` package and verify the color values against published sources.
+
+Since I have seen messy, uninteresting, and confusing LLM generated plots from students and colleagues, the goal of this tutorial is to give them a reference point for how to design great and beautiful figures.
+If you decide to feed this tutorial into your favourite LLM, this is fine with me. I just hope it does improve your figure quality! xD
