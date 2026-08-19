@@ -8,6 +8,8 @@ TL;DR: Your plots make or break your paper.
 I hope this tutorial contains a few interesting details for everyone to improve their plotting game!
 Let me know if you have things to add or if you do things differently.
 
+**Just want Claude to follow these conventions without reading the whole tutorial?** Copy [`CLAUDE.md`](CLAUDE.md) into your project root. Claude Code picks it up automatically and will apply the plotting rules from this tutorial to every figure you make together. If your project already has a `CLAUDE.md`, paste the content in.
+
 > This tutorial is inspired by @michaeldeistler's figure tutorial [mackelab/figure_tutorial](https://github.com/mackelab/figure_tutorial). I highly recommend checking it out in addition to this one. I wanted to prepare an extended version that covers the full workflow from data preparation to LaTeX integration, explains the reasoning behind each plotting choice more deeply, covers how plots evolve throughout a project, and includes a ready-to-use colorblind-friendly color palette package. The mackelab tutorial additionally explains how to sync your figures via git and how to compose multi-panel figures programmatically (using svgutils); I explain why I decided to do the latter in LaTeX instead.
 
 ---
@@ -17,6 +19,7 @@ Let me know if you have things to add or if you do things differently.
 ```
 tutorial_making_beautiful_plots/
 ├── README.md                          ← this tutorial
+├── CLAUDE.md                          ← drop this in your project to guide Claude Code
 ├── pyproject.toml                     ← pip install -e .
 ├── requirements.txt                   ← minimal dependencies (no pinned versions)
 ├── requirements_pinned.txt            ← exact pinned versions for reproducibility
