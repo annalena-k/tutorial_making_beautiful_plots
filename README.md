@@ -1,4 +1,4 @@
-# Making Beautiful Plots for Scientific Papers
+# Making beautiful plots for scientific papers
 
 Disclaimer: I believe that the plots of a paper are like the blurb of a fantasy book. While the title and abstract convince the reader to click on the paper in the first place (like the cover design), the plots will decide whether they actually read, understand, and appreciate the paper.
 Plots will either convince the reader of your claim or they will confuse them, cast doubt on your results, and leave them frustrated.
@@ -81,25 +81,25 @@ pip install -r requirements_pinned.txt
 
 ---
 
-## Table of Contents
+## Table of contents
 
-- [Making Beautiful Plots for Scientific Papers](#making-beautiful-plots-for-scientific-papers)
+- [Making beautiful plots for scientific papers](#making-beautiful-plots-for-scientific-papers)
   - [Contents of this repository](#contents-of-this-repository)
   - [Quick start](#quick-start)
-  - [Table of Contents](#table-of-contents)
-  - [1. The Philosophy of Plotting](#1-the-philosophy-of-plotting)
+  - [Table of contents](#table-of-contents)
+  - [1. The philosophy of plotting](#1-the-philosophy-of-plotting)
     - [What to ask yourself before plotting](#what-to-ask-yourself-before-plotting)
     - [Clutter is the enemy](#clutter-is-the-enemy)
     - [Every choice matters](#every-choice-matters)
     - [Iterate with collaborators](#iterate-with-collaborators)
-  - [2. Plan how you plot: The Workflow](#2-plan-how-you-plot-the-workflow)
+  - [2. Plan how you plot: the workflow](#2-plan-how-you-plot-the-workflow)
     - [2.1 Summarize your data into small files](#21-summarize-your-data-into-small-files)
     - [2.2 Don't plot on the cluster](#22-dont-plot-on-the-cluster)
     - [2.3 Version control data, code, and figures](#23-version-control-data-code-and-figures)
     - [2.4 Folder structure](#24-folder-structure)
     - [2.5 Why I plot in notebooks](#25-why-i-plot-in-notebooks)
     - [2.6 Use a dedicated virtual environment](#26-use-a-dedicated-virtual-environment)
-  - [3. The Plotting Process and Its Details](#3-the-plotting-process-and-its-details)
+  - [3. The plotting process and its details](#3-the-plotting-process-and-its-details)
     - [3.1 The matplotlibrc file](#31-the-matplotlibrc-file)
     - [3.2 Installing the right fonts](#32-installing-the-right-fonts)
     - [3.3 Getting the right figure size](#33-getting-the-right-figure-size)
@@ -107,21 +107,21 @@ pip install -r requirements_pinned.txt
     - [3.5 Saving the figure](#35-saving-the-figure)
     - [3.6 Integrating figures into LaTeX](#36-integrating-figures-into-latex)
   - [4. Why you should make multiple versions of a figure](#4-why-you-should-make-multiple-versions-of-a-figure)
-  - [5. How Plots Evolve During Paper Writing](#5-how-plots-evolve-during-paper-writing)
+  - [5. How plots evolve during paper writing](#5-how-plots-evolve-during-paper-writing)
     - [Early exploration: many plots, most discarded](#early-exploration-many-plots-most-discarded)
     - [Many versions of the same plot: iteration is the process](#many-versions-of-the-same-plot-iteration-is-the-process)
     - [Figures get rearranged](#figures-get-rearranged)
     - [Some plots never make the final paper](#some-plots-never-make-the-final-paper)
     - [Figures in slides](#figures-in-slides)
     - [Referee revisions](#referee-revisions)
-  - [6. The Example Plots](#6-the-example-plots)
+  - [6. The example plots](#6-the-example-plots)
   - [7. Citing papers and colormaps](#7-citing-papers-and-colormaps)
-  - [8. Further Reading](#8-further-reading)
+  - [8. Further reading](#8-further-reading)
   - [9. LLM usage disclaimer](#9-llm-usage-disclaimer)
 
 ---
 
-## 1. The Philosophy of Plotting
+## 1. The philosophy of plotting
 
 Before touching any code, it's worth thinking hard about why and what you're plotting. A figure in a scientific paper is not just data, it is an argument designed to convince the reader of your story. The most technically correct plot can fail completely as a figure if it doesn't communicate effectively what you want to say.
 
@@ -179,7 +179,7 @@ You'll often find that colleagues immediately notice things you've stopped seein
 
 ---
 
-## 2. Plan how you plot: The Workflow
+## 2. Plan how you plot: the workflow
 
 ### 2.1 Summarize your data into small files
 
@@ -294,7 +294,7 @@ python -m ipykernel install --user --name venv_plotting --display-name "venv_plo
 
 ---
 
-## 3. The Plotting Process and Its Details
+## 3. The plotting process and its details
 
 ### 3.1 The matplotlibrc file
 
@@ -636,7 +636,7 @@ if VERSION == "dark":
 
 ---
 
-## 5. How Plots Evolve During Paper Writing
+## 5. How plots evolve during paper writing
 
 It was important for me to realize that the final figures in a paper look nothing like the first plots I made during a project. Understanding this helped me not get discouraged early on and allowed me to organize my work so I can find things later.
 
@@ -679,7 +679,7 @@ Referees will ask for additional analyses, replotted comparisons with new baseli
 
 ---
 
-## 6. The Example Plots
+## 6. The example plots
 
 The three examples in `example_plots/` are not just toy demos — each was chosen to represent a distinct plot type that comes up in almost every ML or physics paper, and each illustrates a specific set of design challenges.
 
@@ -720,7 +720,7 @@ If you use `matplotlib`, you should also cite:
 
 ---
 
-## 8. Further Reading
+## 8. Further reading
 
 - [**mackelab/figure_tutorial**](https://github.com/mackelab/figure_tutorial) — the tutorial that inspired this one; focuses on Python-based figure composition with svgutils, a different and complementary approach
 - [**Paul Tol's colorblind-friendly palettes**](https://personal.sron.nl/~pault/data/colourschemes.pdf) — the reference for the `paul_tol_bright` and `paul_tol_muted` palettes in this repo
