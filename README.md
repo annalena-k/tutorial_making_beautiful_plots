@@ -114,10 +114,10 @@ pip install -r requirements_pinned.txt
     - [Some plots never make the final paper](#some-plots-never-make-the-final-paper)
     - [Figures in slides](#figures-in-slides)
     - [Referee revisions](#referee-revisions)
-  - [The Example Plots](#the-example-plots)
-  - [6. Citing papers and colormaps](#6-citing-papers-and-colormaps)
-  - [7. Further Reading](#7-further-reading)
-  - [8. LLM usage disclaimer](#8-llm-usage-disclaimer)
+  - [6. The Example Plots](#6-the-example-plots)
+  - [7. Citing papers and colormaps](#7-citing-papers-and-colormaps)
+  - [8. Further Reading](#8-further-reading)
+  - [9. LLM usage disclaimer](#9-llm-usage-disclaimer)
 
 ---
 
@@ -679,7 +679,7 @@ Referees will ask for additional analyses, replotted comparisons with new baseli
 
 ---
 
-## The Example Plots
+## 6. The Example Plots
 
 The three examples in `example_plots/` are not just toy demos — each was chosen to represent a distinct plot type that comes up in almost every ML or physics paper, and each illustrates a specific set of design challenges.
 
@@ -698,7 +698,7 @@ Each notebook contains a `VERSION` switch at the top (`"paper"` / `"slides"` / `
 
 ---
 
-## 6. Citing papers and colormaps
+## 7. Citing papers and colormaps
 
 Since it is a lot of work to design colorblind friendly color schemes and write nice plotting packages, I would like to ask you to cite the color schemes and packages you used to create your figures.
 This is the only way we can show appreciation for such important work.
@@ -720,7 +720,7 @@ If you use `matplotlib`, you should also cite:
 
 ---
 
-## 7. Further Reading
+## 8. Further Reading
 
 - [**mackelab/figure_tutorial**](https://github.com/mackelab/figure_tutorial) — the tutorial that inspired this one; focuses on Python-based figure composition with svgutils, a different and complementary approach
 - [**Paul Tol's colorblind-friendly palettes**](https://personal.sron.nl/~pault/) — the reference for the `paul_tol_bright` and `paul_tol_muted` palettes in this repo
@@ -732,7 +732,7 @@ If you use `matplotlib`, you should also cite:
 
 ---
 
-## 8. LLM usage disclaimer
+## 9. LLM usage disclaimer
 
 Claude code was used to iterate the structure of this tutorial, prepare the general examples (including the data), and improve some of the code that I use for plotting my own paper figures.
 I gathered the points discussed in the tutorial myself, wrote an initial, incomplete draft, and instructed Claude to clean my writing, shorten it, and add small technical details that I wasn't aware of.
