@@ -60,7 +60,7 @@ PAUL_TOL_BRIGHT = {
     "red":    "#EE6677",
     "purple": "#AA3377",
     "grey":   "#BBBBBB",
-}  # Tol (2021) https://personal.sron.nl/~pault/
+}  # Tol (2021) https://personal.sron.nl/~pault/data/colourschemes.pdf
 
 PAUL_TOL_MUTED = {
     "indigo":    "#332288",
@@ -73,7 +73,7 @@ PAUL_TOL_MUTED = {
     "wine":      "#882255",
     "purple":    "#AA4499",
     "pale_grey": "#DDDDDD",
-}  # Tol (2021) https://personal.sron.nl/~pault/
+}  # Tol (2021) https://personal.sron.nl/~pault/data/colourschemes.pdf
 
 IBM_DESIGN_LIBRARY = {
     "blue":    "#648FFF",

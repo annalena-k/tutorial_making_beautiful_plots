@@ -52,7 +52,7 @@ def paul_tol_bright() -> dict:
     """Paul Tol's Bright palette — vivid, high-contrast, good for scatter plots and lines.
 
     7 colors. Official values from Paul Tol's notes (2021).
-    Reference: https://personal.sron.nl/~pault/
+    Reference: https://personal.sron.nl/~pault/data/colourschemes.pdf
     """
     return {
         "blue":   _to_hex((68,  119, 170)),  # #4477AA
@@ -69,7 +69,7 @@ def paul_tol_muted() -> dict:
     """Paul Tol's Muted palette — softer tones, good for filled areas.
 
     10 colors. Official values from Paul Tol's notes (2021).
-    Reference: https://personal.sron.nl/~pault/
+    Reference: https://personal.sron.nl/~pault/data/colourschemes.pdf
     """
     return {
         "indigo":    _to_hex((51,  34,  136)),  # #332288

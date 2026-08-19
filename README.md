@@ -709,7 +709,7 @@ Depending on which palettes you use from `cb_colors`, cite the appropriate origi
 | Palette | Citation |
 |---|---|
 | `okabe_and_ito` | Okabe, M., & Ito, K. (2008). *Color universal design (CUD): How to make figures and presentations that are friendly to colorblind people.* [jfly.uni-koeln.de/color](https://jfly.uni-koeln.de/color/) (Original work published 2002) |
-| `paul_tol_bright`, `paul_tol_muted` | Tol, P. (2021). *Paul Tol's Notes: Introduction to Color Schemes.* [personal.sron.nl/~pault/](https://personal.sron.nl/~pault/) |
+| `paul_tol_bright`, `paul_tol_muted` | Tol, P. (2021). *Paul Tol's Notes: Introduction to Color Schemes.* [personal.sron.nl/~pault/](https://personal.sron.nl/~pault/data/colourschemes.pdf) |
 | `accessible_colors` | Petroff, M. A. (2021). *A hitchhiker's guide to choosing colors for scientific figures.* [arXiv:2107.02270](https://arxiv.org/abs/2107.02270) |
 | `ibm_design_library` | IBM Design Language — Color. [ibm.com/design/language/color/](https://www.ibm.com/design/language/color/) |
 | `nceas_two_color_pairs`, `nceas_blue_to_red`, `nceas_purple_to_green` | Phillips, A. (2022). *Colorblind Safe Color Schemes.* NCEAS Science Communication Resource Corner. [nceas.ucsb.edu](https://www.nceas.ucsb.edu/sites/default/files/2022-06/Colorblind%20Safe%20Color%20Schemes.pdf) |
@@ -723,7 +723,7 @@ If you use `matplotlib`, you should also cite:
 ## 8. Further Reading
 
 - [**mackelab/figure_tutorial**](https://github.com/mackelab/figure_tutorial) — the tutorial that inspired this one; focuses on Python-based figure composition with svgutils, a different and complementary approach
-- [**Paul Tol's colorblind-friendly palettes**](https://personal.sron.nl/~pault/) — the reference for the `paul_tol_bright` and `paul_tol_muted` palettes in this repo
+- [**Paul Tol's colorblind-friendly palettes**](https://personal.sron.nl/~pault/data/colourschemes.pdf) — the reference for the `paul_tol_bright` and `paul_tol_muted` palettes in this repo
 - [**Okabe & Ito colorblind palette**](https://jfly.uni-koeln.de/color/) — the original paper proposing the `okabe_and_ito` palette
 - [**UCSB colorblind-safe schemes reference**](https://www.nceas.ucsb.edu/sites/default/files/2022-06/Colorblind%20Safe%20Color%20Schemes.pdf) — a useful overview of multiple palettes with visual comparisons
 - [**Coblis: color blindness simulator**](https://www.color-blindness.com/coblis-color-blindness-simulator/) — paste your figure to see how it looks under different types of color vision deficiency
